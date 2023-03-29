@@ -19,17 +19,17 @@
     <alias name="dataSource-${Globals.DbType}" alias="dataSource" />
     <alias name="dataSource-${Globals.DbType}" alias="egov.dataSource" />
    
-   <bean id="dataSource-mysql" class="org.springframework.jndi.JndiObjectFactoryBean">
+  <!--  <bean id="dataSource-mysql" class="org.springframework.jndi.JndiObjectFactoryBean">
    		<property name="jndiName" value="java:comp/env/jdbc/homepageDB"/>
-   </bean>
+   </bean> -->
    
 	<!-- mysql -->
-<!--     <bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${Globals.DriverClassName}"/>
         <property name="url" value="${Globals.Url}" />
         <property name="username" value="${Globals.UserName}"/>
         <property name="password" value="${Globals.Password}"/>
-    </bean> -->
+    </bean>
       
 </beans>
 <!-- beans: bean들을 넣는곳 -->
