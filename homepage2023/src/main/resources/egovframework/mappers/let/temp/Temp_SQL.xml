@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.temp.service.impl.TempMapper">		<!-- (마이바티스)맵퍼 경로 설정, 여기 경로꺼만 가지고 온다 -->
+
+	<resultMap id="temp" type="egovframework.let.temp.service.TempVO">
+		<result property="tempId" column="TEMP_ID"/>
+		<result property="tempVal" column="TEMP_VAL"/>
+	</resultMap>
+
+	<select id="selectTemp" resultMap="temp">
+		SELECT
+			TEMP_ID
+			, TEMP_VAL
+		FROM lettemp
+		WHERE TEMP_ID = #{tempId}		<!-- 마이바티스는 불러오는 타입을 중갈호로 한다. -->
+	</select>
+	
+	<select id="selectTempList" resultType="egovMap">
+		SELECT
+			TEMP_ID
+			, TEMP_VAL
+		FROM lettemp
+		ORDER BY TEMP_ID DESC
+	</select>
+	
+	<insert id="insertTemp" parameterType="egovframework.let.temp.service.TempVO">
+		INSERT INTO lettemp (TEMP_VAL)
+		VALUES (#{tempVal})
+	</insert>
+	
+</mapper>

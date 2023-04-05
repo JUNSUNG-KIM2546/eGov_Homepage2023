@@ -2,5 +2,20 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 	
+	<!-- SqlSession setup for MyBatis Database Layer -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:/egovframework/mappers/config/sql-mapper-config.xml"/>
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:egovframework/mappers/let/**/*_SQL.xml</value> <!-- SQL 작성하는 곳 -->
+			</list>
+		</property>
+	</bean>
+	
+	<!-- MapperConfigurer setup for MyBatis Database Layer with @Mapper("deptMepper") in DeptMapper Interface -->
+	<bean class="egovframework.rte.psl.dataaccess.mapper.MapperConfigurer">
+		<property name="basePackage" value="egovframework.**.service.impl"/>	<!-- 맵퍼 작성하는 곳 -->
+	</bean>
 	
 </beans>

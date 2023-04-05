@@ -9,7 +9,7 @@ import egovframework.rte.psl.dataaccess.EgovAbstractDAO;
 public class TempDAO extends EgovAbstractDAO {
 	
 	public TempVO selectTemp(TempVO vo) throws Exception {
-		return (TempVO)select("TempDAO.selectTemp", vo);
+		return (TempVO)select("TempDAO.selectTemp", vo);	// DAO 고유 값
 	}
 
 }
