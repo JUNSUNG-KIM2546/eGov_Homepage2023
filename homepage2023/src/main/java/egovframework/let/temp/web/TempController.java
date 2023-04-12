@@ -57,5 +57,33 @@ public class TempController {
 		tempService.insertTemp(tempVO);
 		return "forward:/temp/selectList.do";
 	}
+		
+	//임시데이터 수정하기	
+	@RequestMapping(value = "/temp/update.do")
+	public String update(TempVO tempVO, HttpServletRequest request) throws Exception{
+		tempService.updateTemp(tempVO);
+		return "forward:/temp/selectList.do";	
+	}
+	
+	//임시데이터 삭제하기
+	@RequestMapping(value = "/temp/delete.do")
+	public String delete(TempVO tempVO, HttpServletRequest request) throws Exception{
+		tempService.deleteTemp(tempVO);
+		return "forward:/temp/selectList.do";
+	}
+	
+	//JSTL
+	@RequestMapping(value = "/temp/jstl.do")
+	public String jstl(TempVO searchVO, HttpServletRequest request, ModelMap model) throws Exception{
+	
+		return "/temp/Jstl";
+	}
+	
+	//JSTL Import용
+	@RequestMapping(value = "/temp/jstlImport.do")
+	public String jstlImport(TempVO searchVO, HttpServletRequest request, ModelMap model) throws Exception{
+	
+		return "/temp/JstlImport";
+	}
 	
 }

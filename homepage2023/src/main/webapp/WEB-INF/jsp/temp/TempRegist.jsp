@@ -12,16 +12,16 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	<!-- 여기 버전을 가져오겠다 (교육용), 회사에서는 회사에 맞는 버전으로 가져와야함 -->
 </head>
 <body>
-	<c:choose>	<!-- if문 같은거 -->
+	<c:choose>	<%-- if문 같은거 --%>
 	    <c:when test="${not empty result.tempId}">
-	        <c:set var="actionUrl" value="/temp/update.do"/>	<!-- 변수 선언 -->
+	        <c:set var="actionUrl" value="/temp/update.do"/>	<%-- 변수 선언 --%>
 	    </c:when>
 	    <c:otherwise>
 	        <c:set var="actionUrl" value="/temp/insert.do"/>
 	    </c:otherwise>
 	</c:choose>
 
-	<!--  <form action="/temp/insert.do" method="post" name="tempVO"> -->
+	<%--  <form action="/temp/insert.do" method="post" name="tempVO"> --%>
 	<form action="${actionUrl}" method="post" name="tempVO">
 		<input type="hidden" name="tempId" value="${result.tempId}"/>
         <label for="tempVal">값 정보 : </label>
@@ -38,3 +38,5 @@
     </form>
 </body>
 </html>
+
+<%-- 이거슨 JSP 주석 --%>

@@ -7,6 +7,7 @@
 		<result property="tempVal" column="TEMP_VAL"/>
 	</resultMap>
 
+	<!-- 데이터 검색 -->
 	<select id="selectTemp" resultMap="temp">
 		SELECT
 			TEMP_ID
@@ -15,6 +16,7 @@
 		WHERE TEMP_ID = #{tempId}		<!-- 마이바티스는 불러오는 타입을 중갈호로 한다. -->
 	</select>
 	
+	<!-- 데이터 검색 -->
 	<select id="selectTempList" resultType="egovMap">
 		SELECT
 			TEMP_ID
@@ -23,9 +25,25 @@
 		ORDER BY TEMP_ID DESC
 	</select>
 	
+	<!-- 데이터 삽입 -->
 	<insert id="insertTemp" parameterType="egovframework.let.temp.service.TempVO">
 		INSERT INTO lettemp (TEMP_VAL)
 		VALUES (#{tempVal})
 	</insert>
 	
+	<!-- 데이터 수정 -->
+	<update id="updateTemp" parameterType="egovframework.let.temp.service.TempVO">
+		UPDATE lettemp
+		SET TEMP_VAL = #{tempVal}
+		WHERE TEMP_ID = #{tempId}
+	</update>
+	
+	<!-- 데이터 삭제 -->
+	<delete id="deleteTemp" parameterType="egovframework.let.temp.service.TempVO">	
+		DELETE
+		FROM lettemp
+		WHERE TEMP_ID = #{tempId}
+	</delete>
+	
 </mapper>
+

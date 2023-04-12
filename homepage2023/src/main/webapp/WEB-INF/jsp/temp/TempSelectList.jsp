@@ -28,7 +28,12 @@ th, td{padding: 5px; border: 1px solid #000;}
             <c:forEach var="result" items="${resultList }">		<!-- jstl를 쓰겠다 , 반복문-->
                 <tr>
                     <td><c:out value="${result.tempId}"/></td>	<!-- 씨 아웃 = 시스아웃하고 동일, 해킹방지(보안)-->
-                    <td><c:out value="${result.tempVal}"/></td>   
+                    <td>
+	                    <c:url var="viewUrl" value="/temp/select.do">
+	                    	<c:param name="tempId" value="${result.tempId}"/>
+	                    </c:url>
+	                    <a href="${viewUrl}"><c:out value="${result.tempVal}"/></a>
+                    </td>   
                 </tr>
             </c:forEach>
         </tbody>
