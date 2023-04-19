@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.temp.service.impl.Temp2Mapper">		<!-- (마이바티스)맵퍼 경로 설정, 여기 경로꺼만 가지고 온다 -->
+
+	<resultMap id="temp" type="egovframework.let.temp.service.TempVO">
+		<result property="tempId" column="TEMP_ID"/>
+		<result property="tempVal" column="TEMP_VAL"/>
+	</resultMap>
+
+	<!-- 데이터 검색 -->
+	<select id="selectTemp" resultMap="temp">
+		SELECT
+			TEMP_ID
+			, TEMP_VAL
+		FROM lettemp2
+		WHERE TEMP_ID = #{tempId}		<!-- 마이바티스는 불러오는 타입을 중갈호로 한다. -->
+	</select>
+	
+	<!-- 데이터 검색 -->
+	<select id="selectTempList" resultType="egovMap">
+		SELECT
+			TEMP_ID
+			, TEMP_VAL
+		FROM lettemp2
+		ORDER BY TEMP_ID DESC
+	</select>
+	
+	<!-- 데이터 삽입 -->
+	<insert id="insertTemp" parameterType="egovframework.let.temp.service.TempVO">
+		INSERT INTO lettemp2 (TEMP_ID, TEMP_VAL)
+		VALUES (#{tempId}, #{tempVal})
+	</insert>
+	
+	<!-- 데이터 수정 -->
+	<update id="updateTemp" parameterType="egovframework.let.temp.service.TempVO">
+		UPDATE lettemp2
+		SET TEMP_VAL = #{tempVal}
+		WHERE TEMP_ID = #{tempId}
+	</update>
+	
+	<!-- 데이터 삭제 -->
+	<delete id="deleteTemp" parameterType="egovframework.let.temp.service.TempVO">	
+		DELETE
+		FROM lettemp2
+		WHERE TEMP_ID = #{tempId}
+	</delete>
+	
+</mapper>
+

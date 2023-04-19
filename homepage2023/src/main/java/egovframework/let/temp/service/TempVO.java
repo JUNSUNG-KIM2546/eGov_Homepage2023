@@ -29,5 +29,4 @@ public class TempVO extends ComDefaultVO implements Serializable {
 	}
 	
 	
-	
 }

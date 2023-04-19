@@ -6,3 +6,4 @@
 
 
 JSTL Import 확인
+<c:out value="${param.test}"/>
