@@ -29,16 +29,23 @@ public class ImagePaginationRenderer extends AbstractPaginationRenderer implemen
 	
 	}
 	
-	public void initVariables(){
-		firstPageLabel    = "<li>&#160;</li><li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_prevend.gif\" alt=\"처음\"   border=\"0\"/></a></li>";
-        previousPageLabel = "<li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_prev.gif\"    alt=\"이전\"   border=\"0\"/></a></li>";
-        currentPageLabel  = "<li><strong>{0}</strong></li>";
-        otherPageLabel    = "<li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \">{2}</a></li>";
-        nextPageLabel     = "<li>&#160;<a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_next.gif\"    alt=\"다음\"   border=\"0\"/></a></li>";
-        lastPageLabel     = "<li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_nextend.gif\" alt=\"마지막\" border=\"0\"/></a></li>";
-	}
+//	public void initVariables(){
+//		firstPageLabel    = "<li>&#160;</li><li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_prevend.gif\" alt=\"처음\"   border=\"0\"/></a></li>";
+//        previousPageLabel = "<li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_prev.gif\"    alt=\"이전\"   border=\"0\"/></a></li>";
+//        currentPageLabel  = "<li><strong>{0}</strong></li>";
+//        otherPageLabel    = "<li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \">{2}</a></li>";
+//        nextPageLabel     = "<li>&#160;<a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_next.gif\"    alt=\"다음\"   border=\"0\"/></a></li>";
+//        lastPageLabel     = "<li><a href=\"?pageIndex={1}\" onclick=\"{0}({1});return false; \"><img src=\"" + servletContext.getContextPath() +  "/images/egovframework/com/cmm/mod/icon/icon_nextend.gif\" alt=\"마지막\" border=\"0\"/></a></li>";
+//	}
 
-	
+	public void initVariables(){
+		firstPageLabel    = "<a href=\"{0}&amp;pageIndex={1}\" class=\"first\" title=\"처음페이지로 이동\"><span> 처음 </span></a>";
+        previousPageLabel = "<a href=\"{0}&amp;pageIndex={1}\" class=\"prev\" title=\"이전페이지로 이동\"><span> 이전 </span></a>";
+        currentPageLabel  = "<strong class=\"current\">{0}</strong>";
+        otherPageLabel    = "<a href=\"{0}&amp;pageIndex={1}\" class=\"page\" title=\"{1}페이지로 이동\"> {1} </a>";
+        nextPageLabel     = "<a href=\"{0}&amp;pageIndex={1}\" class=\"next\" title=\"다음페이지로 이동\"><span> 다음 </span></a>";
+        lastPageLabel     = "<a href=\"{0}&amp;pageIndex={1}\" class=\"last\" title=\"마지막페이지로 이동\"><span> 마지막 </span></a>";
+	}
 
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
