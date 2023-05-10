@@ -44,7 +44,48 @@ public class CrudController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
 			
-		return "crud/CrudSelectList";
+		return "crud/CrudSelectList";	//jsp 명칭하고 똑같아야한다.
+	}
+	
+	//CRUD 가져오기
+	@RequestMapping(value = "/crud/select.do")
+	public String select(CrudVO crudVO, HttpServletRequest request, ModelMap model) throws Exception {
+		CrudVO result = crudService.selectCrud(crudVO);
+		model.addAttribute("result", result);
+		return "crud/CrudSelect";	//jsp 명칭하고 똑같아야한다.
+	}
+	
+	//CRUD 등록 / 수정
+	@RequestMapping(value = "/crud/crudRegist.do")
+	public String CrudRegist(CrudVO crudVO, HttpServletRequest request, ModelMap model) throws Exception{
+		CrudVO result = new CrudVO();
+		if(!EgovStringUtil.isEmpty(crudVO.getCrudId())) {
+			result = crudService.selectCrud(crudVO);
+		}
+		model.addAttribute("result", result);
+		
+		return "crud/CrudRegist";	//jsp 명칭하고 똑같아야한다.
+	}
+	
+	//CRUD 등록하기
+	@RequestMapping(value = "/crud/insert.do")
+	public String insert(CrudVO crudVO, HttpServletRequest request, ModelMap model) throws Exception {
+		crudService.insertCrud(crudVO);
+		return "forward:/crud/selectList.do";	//jsp 명칭하고 똑같아야한다.
+	}
+	
+	//CRUD 수정하기
+	@RequestMapping(value = "/crud/update.do")
+	public String update(CrudVO crudVO, HttpServletRequest request, ModelMap model) throws Exception {
+		crudService.updateCrud(crudVO);
+		return "forward:/crud/selectList.do";	//jsp 명칭하고 똑같아야한다.
+	}
+	
+	//CRUD 삭제하기
+	@RequestMapping(value = "/crud/delete.do")
+	public String delete(CrudVO crudVO, HttpServletRequest request, ModelMap model) throws Exception {
+		crudService.deleteCrud(crudVO);
+		return "forward:/crud/selectList.do";	//jsp 명칭하고 똑같아야한다.
 	}
 	
 }
