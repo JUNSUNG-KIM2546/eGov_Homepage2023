@@ -14,6 +14,7 @@ import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
 import egovframework.let.board.service.BoardService;
 import egovframework.let.board.service.BoardVO;
+import egovframework.rte.fdl.string.EgovStringUtil;
 import egovframework.rte.psl.dataaccess.util.EgovMap;
 import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
@@ -28,7 +29,7 @@ public class BoardController {
 	@RequestMapping(value = "/board/selectList.do")
 	public String selectList(@ModelAttribute("searchVO") BoardVO searchVO, HttpServletRequest request, ModelMap model) throws Exception {
 		//공지 게시글
-		searchVO.setNoticeAt("Y");
+		searchVO.setNoticeAt("Y");	//공지글
 		//java.util.List
 		List<EgovMap> noticeResultList = boardService.selectBoardList(searchVO);
 		model.addAttribute("noticeResultList", noticeResultList);
@@ -43,9 +44,9 @@ public class BoardController {
 		searchVO.setLastIndex(paginationInfo.getLastRecordIndex());
 		searchVO.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
 		
-		searchVO.setNoticeAt("N");
-		List<EgovMap> ResultList = boardService.selectBoardList(searchVO);
-		model.addAttribute("noticeResultList", noticeResultList);
+		searchVO.setNoticeAt("N");	//일반게시글
+		List<EgovMap> resultList = boardService.selectBoardList(searchVO);
+		model.addAttribute("resultList", resultList);
 		
 		int totCnt = boardService.selectBoardListCnt(searchVO);
 		
@@ -57,7 +58,36 @@ public class BoardController {
 		
 		return "board/BoardSelectList";
 		
+	}
+	
+	//게시물 등록 / 수정
+	@RequestMapping(value = "/board/boardRegist.do")
+	public String boardRegist(@ModelAttribute("searchVO") BoardVO boardVO, HttpServletRequest request, ModelMap model) throws Exception {
+		LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+		if(user == null || user.getId() == null) {
+			model.addAttribute("message", "로그인 후 사용가능합니다.");
+			return "forward:/board/selectList.do";
+		}
 		
+		else {
+			model.addAttribute("USER_INFO", user);
+		}
+		
+		BoardVO result = new BoardVO();
+		//egovframework.let.utl.fcc.service.EgovStringUtil
+		if(!EgovStringUtil.isEmpty(boardVO.getBoardId())) {
+//			result = boardService.selectBoard(boardVO);
+			//보인 및 관리자만 허용
+			if(!user.getId().equals(result.getFrstRegisterId()) && !"admin".equals(user.getId())) {
+				return "forward:/board/selectList.do";
+			}
+		}
+		
+		model.addAttribute("result", result);
+		
+		request.getSession().removeAttribute("sessionBoard");
+		
+		return "board/BoardRegist";
 	}
 	
 }
