@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import egovframework.com.cmm.LoginVO;
 import egovframework.com.cmm.util.EgovUserDetailsHelper;
@@ -77,7 +78,7 @@ public class BoardController {
 		//egovframework.let.utl.fcc.service.EgovStringUtil
 		if(!EgovStringUtil.isEmpty(boardVO.getBoardId())) {
 //			result = boardService.selectBoard(boardVO);
-			//보인 및 관리자만 허용
+			//본인 및 관리자만 허용
 			if(!user.getId().equals(result.getFrstRegisterId()) && !"admin".equals(user.getId())) {
 				return "forward:/board/selectList.do";
 			}
@@ -85,9 +86,53 @@ public class BoardController {
 		
 		model.addAttribute("result", result);
 		
-		request.getSession().removeAttribute("sessionBoard");
+		request.getSession().removeAttribute("sessionBoard");	//초기화
 		
 		return "board/BoardRegist";
+	}
+	
+	//게시물 등록하기
+	@RequestMapping(value = "/board/insert.do")
+	public String insert(/*final MultipartHttpServletRequest multiRequest, */@ModelAttribute("searchVO") BoardVO searchVO, HttpServletRequest request, ModelMap model) throws Exception {
+		
+		// 1. 이중 서브밋 방지 체크
+		if(request.getSession().getAttribute("sessionBoard") != null) {
+			return "forward:/board/selectList.do";
+		}
+		
+		LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+		if(user == null || user.getId() == null) {
+			model.addAttribute("message", "로그인 후 사용가능합니다.");
+			return "forward:/board/selectList.do";
+		}
+		
+		searchVO.setCreatIp(request.getRemoteAddr());
+		searchVO.setUserId(user.getId());
+		
+		boardService.insertBoard(searchVO);
+		
+		// 2. 이중 서브밋 방지
+		request.getSession().setAttribute("sessionBoard", searchVO);
+		return "forward:/board/selectList.do";
+	}
+	
+	//게시물 상세정보 가져오기
+	@RequestMapping(value = "/board/select.do")
+	public String select(@ModelAttribute("searchVO") BoardVO searchVO, HttpServletRequest request, ModelMap model) throws Exception {
+		LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+		model.addAttribute("USER_INFO", user);
+		
+		BoardVO result = boardService.selectBoard(searchVO);
+		//비밀글 여부 체크
+		if("Y".equals(result.getOthbcAt())) {
+			//본인 및 관리자만 허용
+			if(user == null || user.getId() == null || (!user.getId().equals(result.getFrstRegisterId()) && !"admin".equals(user.getId()))) {
+				model.addAttribute("message", "작성자 본인만 확인 가능합니다.");
+				return "forward:/board/selectList.do";
+			}
+		}
+		model.addAttribute("result", result);
+		return "board/BoardSelect";
 	}
 	
 }

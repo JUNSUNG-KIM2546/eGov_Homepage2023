@@ -2,6 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.let.board.service.impl.BoardMapper">		<!-- (마이바티스)맵퍼 경로 설정, 여기 경로꺼만 가지고 온다 -->
 	
+	<resultMap type="egovframework.let.board.service.BoardVO" id="board">
+		<result property="boardId" 			column="BOARD_ID"/>
+		<result property="boardSj" 			column="BOARD_SJ"/>
+		<result property="boardCn" 			column="BOARD_CN"/>
+		<result property="inqireCo"	 		column="INQIRE_CO"/>
+		<result property="creatIp" 			column="CREAT_IP"/>
+		<result property="noticeAt"	 		column="NOTICE_AT"/>
+		<result property="othbcAt" 			column="OTHBC_AT"/>
+		<result property="useAt" 			column="USE_AT"/>
+		<result property="atchFileId" 		column="ATCH_FILE_ID"/>
+		<result property="frstRegistPnttm" 	column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" 	column="FRST_REGISTER_ID"/>
+	</resultMap>
+	
 	<!-- 리스트 가져오기 -->
 	<select id="selectBoardList" resultType="egovMap">
 		SELECT A.BOARD_ID,
@@ -57,6 +71,63 @@
 			</choose>
 		</where>
 	</sql>
+	
+	<!-- 등록하기 -->
+	<insert id="insertBoard" parameterType="egovframework.let.board.service.BoardVO">
+		INSERT INTO BOARD (
+			   BOARD_ID,
+	   		   BOARD_SJ,
+	   		   BOARD_CN,
+	   		   INQIRE_CO,
+			   CREAT_IP,
+			   NOTICE_AT,
+			   OTHBC_AT,
+			   USE_AT,
+			   ATCH_FILE_ID,
+			   FRST_REGIST_PNTTM,
+			   FRST_REGISTER_ID,
+			   LAST_UPDT_PNTTM,
+			   LAST_UPDUSR_ID )
+			   
+		VALUES (
+			   #{boardId},
+	   		   #{boardSj},
+	   		   #{boardCn},
+	   		   0,
+			   #{creatIp},
+			   #{noticeAt},
+			   #{othbcAt},
+			   'Y',
+			   #{atchFileId},
+			   NOW(),
+			   #{userId},
+			   NOW(),
+			   #{userId} )	
+	</insert>
+	
+	<!-- 게시물 상세정보 가져오기 -->
+	<select id="selectBoard" resultMap="board">
+		SELECT BOARD_ID,
+	   		   BOARD_SJ,
+	   		   BOARD_CN,
+	   		   INQIRE_CO,
+			   CREAT_IP,
+			   NOTICE_AT,
+			   OTHBC_AT,
+			   USE_AT,
+			   ATCH_FILE_ID,
+			   FRST_REGIST_PNTTM,
+			   FRST_REGISTER_ID   
+		FROM BOARD
+		WHERE BOARD_ID = #{boardId} AND USE_AT = 'Y'
+	</select>
+	
+	<update id="updateViewCnt" parameterType="egovframework.let.board.service.BoardVO">
+		UPDATE board 
+		-- 선택한 로우기준으로 +1을 한다.
+		SET INQIRE_CO = INQIRE_CO + 1
+		WHERE BOARD_ID  = #{boardId}
+	</update>
 	
 </mapper>
 

@@ -53,8 +53,8 @@
 							<label for="noticeAtY">예 : </label>
 							<input type="radio" id="noticeAtY" name="noticeAt" value="Y" <c:if test="${result.noticeAt eq 'Y'}">checked="checked"</c:if>/>
 							&nbsp;&nbsp;&nbsp;
-							<label for="noticeAtY">아니오 : </label>	
-							<input type="radio" id="noticeAtY" name="noticeAt" value="N" <c:if test="${result.noticeAt ne 'Y'}">checked="checked"</c:if>/>
+							<label for="noticeAtN">아니오 : </label>	
+							<input type="radio" id="noticeAtN" name="noticeAt" value="N" <c:if test="${result.noticeAt ne 'Y'}">checked="checked"</c:if>/>
 						</td>
 					</tr>
 					<tr>
@@ -63,8 +63,8 @@
 							<label for="othbcAtY">예 : </label>
 							<input type="radio" id="othbcAtY" name="othbcAt" value="Y" <c:if test="${result.othbcAt eq 'Y'}">checked="checked"</c:if>/>
 							&nbsp;&nbsp;&nbsp;
-							<label for="othbcAtY">아니오 : </label>	
-							<input type="radio" id="othbcAtY" name="othbcAt" value="N" <c:if test="${result.othbcAt ne 'Y'}">checked="checked"</c:if>/>
+							<label for="othbcAtN">아니오 : </label>	
+							<input type="radio" id="othbcAtN" name="othbcAt" value="N" <c:if test="${result.othbcAt ne 'Y'}">checked="checked"</c:if>/>
 						</td>
 					</tr>
 					<tr>
@@ -76,7 +76,7 @@
 					<tr>
 						<th scope="row">내용</th>
 						<td>
-							<textarea id="boardCn" namr="boardCn" rows="15" title="내용입력"><c:out value="${result.boardCn}"/></textarea>				
+							<textarea id="boardCn" name="boardCn" rows="15" title="내용입력"><c:out value="${result.boardCn}"/></textarea>	<!-- 텍스트에어리어는 구분없이 붙여서 써야함 공백이 있으면 안됨 -->			
 						</td>
 					</tr>
 				</tbody>
@@ -105,7 +105,7 @@
 	</div>
 </div>
 
-<script>
+<script> /* 아이디를 불러오는 = # , 클래스를 불러오는 = . */
 $(document).ready(function(){
 	//게시글 등록
 	$("#btn-reg").click(function(){
