@@ -12,6 +12,83 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
 <title>BOARD 등록/수정 게시판</title>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	<!-- 여기 버전을 가져오겠다 (교육용), 회사에서는 회사에 맞는 버전으로 가져와야함 -->
+<script src="https://cdn.tiny.cloud/1/4rq9k3tlzd5hh2wfb8qfvbln3u61yj5hx0zfimoycf4lsnha/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+$(function(){
+    var plugins = [
+        "advlist", "autolink", "lists", "link", "image", "charmap", "print", "preview", "anchor",
+        "searchreplace", "visualblocks", "code", "fullscreen", "insertdatetime", "media", "table",
+        "paste", "code", "help", "wordcount", "save"
+    ];
+    // 툴바
+    var edit_toolbar = 'formatselect fontselect fontsizeselect |'
+               + ' forecolor backcolor |'
+               + ' bold italic underline strikethrough |'
+               + ' alignjustify alignleft aligncenter alignright |'
+               + ' bullist numlist |'
+               + ' table tabledelete |'
+               + ' link image';
+
+    tinymce.init({
+    	language: "ko_KR", //한글판으로 변경
+        selector: '#boardCn',
+        height: 500,
+        menubar: false,
+        plugins: plugins,
+        toolbar: edit_toolbar,
+        
+        /*** image upload ***/
+        image_title: true,
+        /* enable automatic uploads of images represented by blob or data URIs*/
+        automatic_uploads: true,
+        /*
+            URL of our upload handler (for more details check: https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_url)
+            images_upload_url: 'postAcceptor.php',
+            here we add custom filepicker only to Image dialog
+        */
+        file_picker_types: 'image',
+        /* and here's our custom image picker*/
+        file_picker_callback: function (cb, value, meta) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
+
+            /*
+            Note: In modern browsers input[type="file"] is functional without
+            even adding it to the DOM, but that might not be the case in some older
+            or quirky browsers like IE, so you might want to add it to the DOM
+            just in case, and visually hide it. And do not forget do remove it
+            once you do not need it anymore.
+            */
+            input.onchange = function () {
+                var file = this.files[0];
+
+                var reader = new FileReader();
+                reader.onload = function () {
+                    /*
+                    Note: Now we need to register the blob in TinyMCEs image blob
+                    registry. In the next release this part hopefully won't be
+                    necessary, as we are looking to handle it internally.
+                    */
+                    var id = 'blobid' + (new Date()).getTime();
+                    var blobCache =  tinymce.activeEditor.editorUpload.blobCache;
+                    var base64 = reader.result.split(',')[1];
+                    var blobInfo = blobCache.create(id, file, base64);
+                    blobCache.add(blobInfo);
+
+                    /* call the callback and populate the Title field with the file name */
+                    cb(blobInfo.blobUri(), { title: file.name });
+                };
+                reader.readAsDataURL(file);
+            };
+            input.click();
+        },
+        /*** image upload ***/
+        
+        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+    });
+});
+</script>
 </head>
 <body>
 
@@ -31,7 +108,7 @@
 
 <div class="container">
 	<div id="contents">
-		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()">
+		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" enctype="multipart/form-data">
 			<input type="hidden" name="boardId" value="${result.boardId}"/>
 			
 			<table class="chart2">
@@ -79,20 +156,27 @@
 							<textarea id="boardCn" name="boardCn" rows="15" title="내용입력"><c:out value="${result.boardCn}"/></textarea>	<!-- 텍스트에어리어는 구분없이 붙여서 써야함 공백이 있으면 안됨 -->			
 						</td>
 					</tr>
+					<tr>
+						<th scope="row">파일첨부</th>
+						<td>
+							<input type="file" name="file_1"/><br>
+							<input type="file" name="file_2"/>
+						</td>
+					</tr>
 				</tbody>
 			</table>
 			<div class="btn-cont ar">
 				<c:choose>
 					<c:when test="${not empty searchVO.boardId}">
 						<c:url var="uptUrl" value="/board/update.do">
-							<c:param name="boardId" value="${searchVO.boardId}"/>
+							<c:param name="boardId" value="${result.boardId}"/>
 						</c:url>
 						<a href="${uptUrl}" id="btn-reg" class="btn">수정</a>
 						
 						<c:url var="delUrl" value="/board/delete.do">
-							<c:param name="boardId" value="${searchVO.boardId}"/>
+							<c:param name="boardId" value="${result.boardId}"/>
 						</c:url>
-						<a href="${delUrl}" id="btn-del" class="btn"><i class="ico-del"></i>수정</a>					
+						<a href="${delUrl}" id="btn-del" class="btn"><i class="ico-del"></i>삭제</a>					
 					</c:when>
 					<c:otherwise>
 						<a href="#none" id="btn-reg" class="btn spot">등록</a>

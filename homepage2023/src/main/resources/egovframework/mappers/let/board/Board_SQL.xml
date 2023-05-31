@@ -129,5 +129,33 @@
 		WHERE BOARD_ID  = #{boardId}
 	</update>
 	
+	<!-- 게시물 수정하기 -->
+	<update id="updateBoard" parameterType="egovframework.let.board.service.BoardVO">
+		UPDATE BOARD
+		SET BOARD_SJ = #{boardSj},
+			BOARD_CN = #{boardCn},
+			NOTICE_AT = #{noticeAt},
+			OTHBC_AT = #{othbcAt},
+			<if test="atchFileId != null and atchFileId != ''">
+				ATCH_FILE_ID = #{atchFileId},
+			</if>
+			LAST_UPDT_PNTTM = NOW(),
+			LAST_UPDUSR_ID = #{userId}
+		WHERE BOARD_ID = #{boardId}
+		<if test='mngAt != "Y"'><!-- 작성자 외 수정기능을 막는(보안,해킹 방지) -->
+			AND FRST_REGISTER_ID = #{userId}  
+		</if>
+	</update>
+	
+	<!-- 게시물 삭제하기 --> <!-- 실무에서는 데이터를 웹에서만 삭제하고 데이터베이스에는 데이터가 남도록 한다(세상에 미친놈이 많다) -->
+	<update id="deleteBoard" parameterType="egovframework.let.board.service.BoardVO">
+		UPDATE BOARD
+		SET USE_AT = 'N'
+		WHERE BOARD_ID = #{boardId}
+		<if test='mngAt != "Y"'> <!-- 작성자 외 삭제기능을 막는(보안,해킹 방지) -->
+			AND FRST_REGISTER_ID = #{userId}
+		</if>
+	</update>
+	
 </mapper>
 

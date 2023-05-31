@@ -64,7 +64,7 @@
 						<c:url var="uptUrl" value="/board/boardRegist.do${_BASE_PARAM}">
 							<c:param name="boardId" value="${result.boardId}"/>
 						</c:url>
-						<a href="${upUrl}" class="btn">수정</a>
+						<a href="${uptUrl}" class="btn">수정</a>
 						
 						<c:url var="delUrl" value="/board/delete.do${_BASE_PARAM}">
 							<c:param name="boardId" value="${result.boardId}"/>

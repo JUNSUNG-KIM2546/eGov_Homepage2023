@@ -17,4 +17,10 @@ public interface BoardService {
 	
 	//Board 게시물 상세정보 가져오기
 	public BoardVO selectBoard (BoardVO vo) throws Exception;
-}
+	
+	//Board 게시물 수정하기
+	public void updateBoard (BoardVO vo) throws Exception;
+	
+	//Board 게시물 삭제하기
+	public void deleteBoard (BoardVO vo) throws Exception;
+}	

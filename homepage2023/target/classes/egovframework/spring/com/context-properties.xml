@@ -9,8 +9,10 @@
 	        	<entry key="pageUnit" value="10"/>
 	        	<entry key="pageSize" value="10"/>
 	        	<entry key="posblAtchFileSize" value="5242880"/>
-	        	<entry key="Globals.fileStorePath" value="/user/file/sht/"/>
+	        	<entry key="Globals.fileStorePath" value="${Globals.File}/upload/user/file/sht/"/>
 	        	<entry key="Globals.addedOptions" value="false"/>
+	        	
+	        	<entry key="board.fileStorePath" value="${Globals.File}/upload/board/"/>
 	        </map>
 		</property>
 	</bean>
