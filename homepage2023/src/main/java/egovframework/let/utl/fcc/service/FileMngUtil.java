@@ -35,7 +35,7 @@ public class FileMngUtil {
 	 * - List : java.util
 	 * - Iterator : java.util
 	 * - Entry : java.util
-	 * */
+	 * */	
 	public List<FileVO> parseFileInf(Map<String, MultipartFile> files, String KeyStr, int fileKeyParam, String atchFileId, String storePath) throws Exception {
 		int fileKey = fileKeyParam;
 		
@@ -57,6 +57,12 @@ public class FileMngUtil {
 		}
 		else {
 			atchFileIdString = atchFileId;
+		}
+		
+		//폴더경로 설정
+		File saveFolder = new File(storePathString);
+		if (!saveFolder.exists() || saveFolder.isFile()) {
+			saveFolder.mkdirs();
 		}
 		
 		//파일변수
@@ -85,7 +91,7 @@ public class FileMngUtil {
 			int index = orginFileName.lastIndexOf(".");
 			String fileExt = orginFileName.substring(index + 1);
 			
-			//저장파일명
+			//저장파일명	// keyStr_EgovStringUtil.getTimeStamp() == BOARD_202306071012244480
 			String newName = KeyStr + EgovStringUtil.getTimeStamp() + fileKey;
 			
 			//파일사이즈
@@ -94,7 +100,7 @@ public class FileMngUtil {
 			//파일저장
 			if (!"".equals(orginFileName)) {
 				filePath = storePathString + File.separator + newName;
-				file.transferTo(new File(filePath));
+				file.transferTo(new File(filePath));	//첨부파일 업로드
 			}
 			fvo = new FileVO();
 			fvo.setFileExtsn(fileExt);

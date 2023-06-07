@@ -108,7 +108,7 @@ $(function(){
 
 <div class="container">
 	<div id="contents">
-		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" enctype="multipart/form-data">
+		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" enctype="multipart/form-data">	<!-- enctype이 있어야 첨부파일 올리수가 있다, 첨부파일은 무조건 post로 한다 -->
 			<input type="hidden" name="boardId" value="${result.boardId}"/>
 			
 			<table class="chart2">
