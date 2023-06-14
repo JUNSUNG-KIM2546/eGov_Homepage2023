@@ -163,7 +163,7 @@ public class EgovImageProcessController extends HttpServlet {
     	String atchFileNm = request.getParameter("atchFileNm");
     	String thumbYn = request.getParameter("thumbYn");
     	String fileExt = "";
-    	int index = atchFileNm.lastIndexOf(".");
+    	int index = atchFileNm.lastIndexOf(".");	// 첨부파일 가지고 (확장자명 .)
     	if(index != -1) {
     		fileExt = atchFileNm.substring(index + 1);
     		atchFileNm = atchFileNm.substring(0, index);
@@ -191,6 +191,7 @@ public class EgovImageProcessController extends HttpServlet {
     	else {
     		file = new File(resFilePath, atchFileNm);
     	}
+    	
     	if(file.exists()) {
     		FileInputStream fis = null;
     		BufferedInputStream in = null;
@@ -208,10 +209,10 @@ public class EgovImageProcessController extends HttpServlet {
     			String type = "";
     			if (fileExt != null && !"".equals(fileExt)) {
     				if ("jpg".equals(EgovStringUtil.lowerCase(fileExt))) {
-    					type = "image/j[eg";
+    					type = "image/jpeg";
     				}
     				else {
-    					LOGGER.debug("Image fileType is null.");
+    					type = "image/" + EgovStringUtil.lowerCase(fileExt);
     				}
     			}
     			else {

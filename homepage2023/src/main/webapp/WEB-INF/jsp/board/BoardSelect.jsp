@@ -19,9 +19,21 @@
 <%-- 공통 Style --%>
 <link href="/asset/LYTTMP_0000000000000/style.css" rel="stylesheet" />
 
+<%-- 게시판 타입 --%>
+<c:set var="boardType">
+	<c:choose>
+		<c:when test="${not empty searchVO.boardType}">
+			<c:out value="${searchVO.boardType}"></c:out>
+		</c:when>
+		<c:otherwise>
+			NORMAL
+		</c:otherwise>
+	</c:choose>
+</c:set>
+
 <%-- 기본 URL --%>
 <c:url var ="_BASE_PARAM" value="">
-	<c:param name="menuNo" 	  value="50"/>
+	<c:param name="boardType" value="${boardType}"/>
 	<c:param name="pageIndex" value="${searchVO.pageIndex}"/>	
 	<c:if test="${not empty searchVO.searchCondition}"><c:param name="searchCondition" value="${searchVO.searchCondition}" /></c:if>
 	<c:if test="${not empty searchVO.searchKeyword}"><c:param name="searchKeyword" value="${searchVO.searchKeyword}" /></c:if>

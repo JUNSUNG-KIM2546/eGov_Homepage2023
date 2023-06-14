@@ -97,6 +97,25 @@ $(function(){
 <%-- 공통 Style --%>
 <link href="/asset/LYTTMP_0000000000000/style.css" rel="stylesheet" />
 
+<%-- 게시판 타입 --%>
+<c:set var="boardType">
+	<c:choose>
+		<c:when test="${not empty searchVO.boardType}">
+			<c:out value="${searchVO.boardType}"></c:out>
+		</c:when>
+		<c:otherwise>
+			NORMAL
+		</c:otherwise>
+	</c:choose>
+</c:set>
+
+<%-- 기본 URL --%>
+<c:url var ="_BASE_PARAM" value="">
+	<c:param name="boardType" value="${boardType}"/>
+	<c:if test="${not empty searchVO.searchCondition}"><c:param name="searchCondition" value="searchVO.searchCondition" /></c:if>
+	<c:if test="${not empty searchVO.searchKeyword}"><c:param name="searchKeyword" value="searchVO.searchKeyword" /></c:if>
+</c:url>
+
 <c:choose>
 	<c:when  test="${not empty searchVO.boardId}">
 		<c:set var="actionUrl" value="/board/update.do"/>
@@ -110,6 +129,12 @@ $(function(){
 	<div id="contents">
 		<form action="${actionUrl}" method="post" id="frm" name="frm" onsubmit="return regist()" enctype="multipart/form-data">	<!-- enctype이 있어야 첨부파일 올리수가 있다, 첨부파일은 무조건 post로 한다 -->
 			<input type="hidden" name="boardId" value="${result.boardId}"/>
+			
+			<%-- 첨부파일 삭제 때문에 returnUrl 존재 --%>
+			<input type="hidden" name="returnUrl" value="/board/boardRegist.do"/>
+			
+			<%-- 게시판 타입 --%>
+			<input type="hidden" name="boardType" value="${searchVO.boardType}"/>
 			
 			<table class="chart2">
 				<caption>게시글 작성</caption>
@@ -182,7 +207,7 @@ $(function(){
 						<a href="#none" id="btn-reg" class="btn spot">등록</a>
 					</c:otherwise>
 				</c:choose>
-				<c:url var="listUrl" value="/board/selectList.do"/>
+				<c:url var="listUrl" value="/board/selectList.do${_BASE_PARAM}"/>
 				<a href="${listUrl}" class="btn">취소</a>
 			</div>
 		</form>
