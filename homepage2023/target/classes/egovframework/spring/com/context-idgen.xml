@@ -7,7 +7,7 @@
         class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl"
         destroy-method="destroy">
         <property name="dataSource" ref="dataSource-${Globals.DbType}" />
-        <property name="strategy" ref="fileStrategy" />
+        <property name="strategy" 	ref="fileStrategy" />
         <property name="blockSize"  value="10"/>
         <property name="table"      value="IDS"/>
         <property name="tableName"  value="FILE_ID"/>
@@ -15,9 +15,9 @@
     <!-- 첨부파일 ID Generation  Strategy Config -->
     <bean name="fileStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="FILE_" />
-        <property name="cipers" value="15" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 	value="FILE_" />
+        <property name="cipers" 	value="15" />
+        <property name="fillChar" 	value="0" />
     </bean>
     
     <!-- 게시판마스터 ID Generation  Config-->
@@ -25,7 +25,7 @@
         class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl"
         destroy-method="destroy">
         <property name="dataSource" ref="dataSource-${Globals.DbType}" />
-        <property name="strategy" ref="bbsMstrStrategy" />
+        <property name="strategy" 	ref="bbsMstrStrategy" />
         <property name="blockSize"  value="10"/>
         <property name="table"      value="IDS"/>
         <property name="tableName"  value="BBS_ID"/>
@@ -33,9 +33,9 @@
     <!-- 게시판마스터 ID Generation  Strategy Config -->
     <bean name="bbsMstrStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="BBSMSTR_" />
-        <property name="cipers" value="12" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 	value="BBSMSTR_" />
+        <property name="cipers" 	value="12" />
+        <property name="fillChar" 	value="0" />
     </bean>
     
     <!-- 게시판템플릿 ID Generation  Config-->
@@ -43,7 +43,7 @@
         class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl"
         destroy-method="destroy">
         <property name="dataSource" ref="dataSource-${Globals.DbType}" />
-        <property name="strategy" ref="tmplatStrategy" />
+        <property name="strategy" 	ref="tmplatStrategy" />
         <property name="blockSize"  value="10"/>
         <property name="table"      value="IDS"/>
         <property name="tableName"  value="TMPLAT_ID"/>
@@ -1835,9 +1835,9 @@
 
     <bean name="damManageStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="DMID_" />
-        <property name="cipers" value="15" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 	value="DMID_" />
+        <property name="cipers" 	value="15" />
+        <property name="fillChar" 	value="0" />
     </bean>     
     <!-- NewsManage... END-->   
                     
@@ -1853,9 +1853,9 @@
     </bean>
     <bean name="backupOpertIdStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="BAK" />
-        <property name="cipers" value="17" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 	value="BAK" />
+        <property name="cipers" 	value="17" />
+        <property name="fillChar" 	value="0" />
     </bean> 
     <!-- 백업작업 ID -->
 
@@ -1871,9 +1871,9 @@
     </bean>
     <bean name="backupResultIdStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="BRT" />
-        <property name="cipers" value="17" />
-        <property name="fillChar" value="0" />
+        <property name="prefix"		value="BRT" />
+        <property name="cipers" 	value="17" />
+        <property name="fillChar" 	value="0" />
     </bean> 
     <!-- 백업결과 ID -->
 
@@ -1890,9 +1890,9 @@
 
     <bean name="ServerResrceMntrngLogIdStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="LOG_" />
-        <property name="cipers" value="16" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 	value="LOG_" />
+        <property name="cipers" 	value="16" />
+        <property name="fillChar" 	value="0" />
     </bean> 
     <!--  서버자원 모니터링 ID -->
     
@@ -1909,9 +1909,9 @@
 
     <bean name="httpManageStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="HTTP_" />
-        <property name="cipers" value="15" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 	value="HTTP_" />
+        <property name="cipers" 	value="15" />
+        <property name="fillChar" 	value="0" />
     </bean>     
     <!-- HttpMon... END-->
     
@@ -1928,9 +1928,9 @@
 
     <bean name="httLManageStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="HTTL_" />
-        <property name="cipers" value="15" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 	value="HTTL_" />
+        <property name="cipers" 	value="15" />
+        <property name="fillChar" 	value="0" />
     </bean>     
     <!-- HttpMonLog... END-->   
     
@@ -1947,9 +1947,9 @@
 
     <bean name="procManageStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="PROC_" />
-        <property name="cipers" value="15" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 		value="PROC_" />
+        <property name="cipers" 		value="15" />
+        <property name="fillChar" 		value="0" />
     </bean>     
     <!-- ProcessMon... END-->
     
@@ -1957,18 +1957,18 @@
     <bean name="egovProcessMonLogIdGnrService"
         class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl"
         destroy-method="destroy">
-        <property name="dataSource" ref="egov.dataSource" />
-        <property name="strategy"   ref="prolManageStrategy" />
-        <property name="blockSize"  value="10"/>
-        <property name="table"      value="COMTECOPSEQ"/>
-        <property name="tableName"  value="PROL_ID"/>
+        <property name="dataSource" 	ref="egov.dataSource" />
+        <property name="strategy"   	ref="prolManageStrategy" />
+        <property name="blockSize"  	value="10"/>
+        <property name="table"      	value="COMTECOPSEQ"/>
+        <property name="tableName"  	value="PROL_ID"/>
     </bean>
 
     <bean name="prolManageStrategy"
         class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
-        <property name="prefix" value="PROL_" />
-        <property name="cipers" value="15" />
-        <property name="fillChar" value="0" />
+        <property name="prefix" 		value="PROL_" />
+        <property name="cipers" 		value="15" />
+        <property name="fillChar" 		value="0" />
     </bean>     
     <!-- ProcessMonLog... END-->   
     
@@ -2019,5 +2019,21 @@
        		<property name="fillChar"  value="0"/>
     	</bean>
     	<!-- BOARD END -->
+    	
+    	<!-- JOIN START -->
+    	<bean name="joinIdGnrService" class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrServiceImpl" destroy-method="destroy">
+    		<property name="dataSource" ref="egov.dataSource"/>
+       		<property name="strategy"   ref="joinStrategy"/>	<!-- 밑에 스트레티지랑 이름이 같아야 한다 -->
+       		<property name="blockSize"  value="10"/>
+       		<property name="table" 	    value="IDS"/>		<!-- 데이터베이스 pk값 관리하는 테이블 이름 -->
+       		<property name="tableName"  value="ESNTL_ID"/>
+    	</bean>
+    	
+    	<bean name="joinStrategy" class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+       		<property name="prefix"    value="ESNTL_"/>		<!-- 검색할때 앞에 고정적으로 붙겠다 -->
+       		<property name="cipers"    value="14"/>			
+       		<property name="fillChar"  value="0"/>
+    	</bean>
+    	<!-- JOIN END -->
     	
 </beans>

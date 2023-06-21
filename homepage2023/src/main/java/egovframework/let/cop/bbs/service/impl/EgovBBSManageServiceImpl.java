@@ -98,7 +98,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 	/**
      * 게시물 대하여 상세 내용을 조회 한다.
      *
-     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticle(egovframework.let.cop.bbs.brd.service.BoardVO)
+     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticle(egovframework.let.cop.bbs.JoinVO.service.BoardVO)
      */
     public BoardVO selectBoardArticle(BoardVO boardVO) throws Exception {
 	if (boardVO.isPlusCount()) {
@@ -114,7 +114,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
 	/**
      * 조건에 맞는 게시물 목록을 조회 한다.
      *
-     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticles(egovframework.let.cop.bbs.brd.service.BoardVO)
+     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectBoardArticles(egovframework.let.cop.bbs.JoinVO.service.BoardVO)
      */
     public Map<String, Object> selectBoardArticles(BoardVO boardVO, String attrbFlag) throws Exception {
 	List<BoardVO> list = bbsMngDAO.selectBoardArticleList(boardVO);
@@ -163,7 +163,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
     /**
      * 방명록 내용을 삭제 한다.
      *
-     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#deleteGuestList(egovframework.let.cop.bbs.brd.service.BoardVO)
+     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#deleteGuestList(egovframework.let.cop.bbs.JoinVO.service.BoardVO)
      */
     public void deleteGuestList(BoardVO boardVO) throws Exception {
 	bbsMngDAO.deleteGuestList(boardVO);
@@ -172,7 +172,7 @@ public class EgovBBSManageServiceImpl extends EgovAbstractServiceImpl implements
     /**
      * 방명록에 대한 목록을 조회 한다.
      *
-     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectGuestList(egovframework.let.cop.bbs.brd.service.BoardVO)
+     * @see egovframework.let.cop.bbs.brd.service.EgovBBSManageService#selectGuestList(egovframework.let.cop.bbs.JoinVO.service.BoardVO)
      */
     public Map<String, Object> selectGuestList(BoardVO boardVO) throws Exception {
 	List<BoardVO> result = bbsMngDAO.selectGuestList(boardVO);
