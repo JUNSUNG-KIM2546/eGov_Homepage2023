@@ -11,7 +11,7 @@
 <meta http-equiv="Content-Language" content="ko">
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-<title>회원가입</title>
+<title>회원가입(정보입력)</title>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>	<!-- 여기 버전을 가져오겠다 (교육용), 회사에서는 회사에 맞는 버전으로 가져와야함 -->
 <link rel="stylesheet" href="/asset/member/css/login.css">
 </head>
@@ -66,7 +66,14 @@
 				
 				<tr>
 					<th><strong class="star">*</strong><label for="passwordHint">비밀번호 힌트</label></th>
-					<td><input type="text" id="passwordHint" name="passwordHint" required/></td>
+					<td>
+						<select id="passwordHint" name="passwordHint" required>
+							<option value="1">취미 생활?</option>
+							<option value="2">보물 1호는?</option>
+							<option value="3">여행하고 싶은 곳?</option>
+							<option value="4">취직하고 싶은 곳?</option>
+						</select>
+					</td>
 				</tr>
 				
 				<tr>
@@ -136,10 +143,10 @@
 
 	function regist() {
 		//아이디 중복 검사 체크
-		/* if($("#idCheckAt").val() != "Y"){
+		if($("#idCheckAt").val() != "Y"){
 			alert("아이디 중복 검사를 해주세요.");
 			return false;
-		}else */ if(!$("#emplyrId").val()){
+		}else if(!$("#emplyrId").val()){
 			alert("아이디를 입력해주세요.");
 			return false;
 		}else if(!$("#userNm").val()){
@@ -165,7 +172,7 @@
 		if($("#password").val()){
 			var pw = $("#password").val(),
 				message = "",
-				//대소문자, 특수문자, 숫자는 8자리 이상 정규형
+				//대소문자, 특수문자, 숫자는 8자리 이상 정규형(리플리스올) 자바스크립트 정규형
 				passwordRules1 = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,30}$/,
 				//대소문자, 숫자는 10자리 이상 정규형
 				passwordRules2 = /^(?=.*[a-zA-Z])(?=.*[0-9]).{10,30}$/,

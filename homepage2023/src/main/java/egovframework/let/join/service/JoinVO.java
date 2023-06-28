@@ -7,7 +7,7 @@ import egovframework.com.cmm.ComDefaultVO;
 public class JoinVO extends ComDefaultVO implements Serializable {
 	
 	// 아이디
-	private String emplyId;
+	private String emplyrId;
 	
 	// 이름
 	private String userNm;
@@ -43,12 +43,12 @@ public class JoinVO extends ComDefaultVO implements Serializable {
 	private java.util.Date sbscrbDe;
 
 	
-	public String getEmplyId() {
-		return emplyId;
+	public String getEmplyrId() {
+		return emplyrId;
 	}
 
-	public void setEmplyId(String emplyId) {
-		this.emplyId = emplyId;
+	public void setEmplyrId(String emplyrId) {
+		this.emplyrId = emplyrId;
 	}
 
 	public String getUserNm() {

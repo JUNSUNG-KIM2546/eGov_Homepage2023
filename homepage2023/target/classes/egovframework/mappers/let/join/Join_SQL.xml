@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.join.service.impl.JoinMapper">		<!-- (마이바티스)맵퍼 경로 설정, 여기 경로꺼만 가지고 온다 -->
+	
+	<select id="duplicateCheck" resultType="java.lang.Integer">
+		-- 사용자 계정(중복체크) 카운트로 비교 --
+		SELECT count(*) CNT
+		FROM lettnemplyrinfo
+		WHERE emplyr_id = #{emplyrId}
+	</select>
+	
+	<insert id="insertJoin">
+		INSERT INTO lettnemplyrinfo 
+		(
+		ESNTL_ID,
+		EMPLYR_ID,
+		USER_NM,
+		EMAIL_ADRES,
+		PASSWORD,
+		PASSWORD_HINT,
+		PASSWORD_CNSR,
+		EMPLYR_STTUS_CODE,
+		SBSCRB_DE
+		)
+		VALUES
+		(
+		#{esntlId}
+		, #{emplyrId}
+		, #{userNm}
+		, #{emailAdres}
+		, #{password}
+		, #{passwordHint}
+		, #{passwordCnsr}
+		, 'p'
+		, NOW()
+		)
+	</insert>
+	
+</mapper>
+
