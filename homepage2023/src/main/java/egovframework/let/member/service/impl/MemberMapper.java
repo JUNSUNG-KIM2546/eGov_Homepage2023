@@ -1,11 +1,17 @@
 package egovframework.let.member.service.impl;
 
-import egovframework.com.cmm.LoginVO;
+import egovframework.let.member.service.MemberVO;
 import egovframework.rte.psl.dataaccess.mapper.Mapper;
 
-@Mapper("loginMapper")
+@Mapper("memberMapper")
 public interface MemberMapper {
 	
-	// 로그인 처리
-	public LoginVO actionLogin(LoginVO vo) throws Exception;
+	// 회원ID찾기
+	MemberVO findId(MemberVO vo) throws Exception;
+	
+	// 회원PW찾기
+	MemberVO findPassword(MemberVO vo) throws Exception;
+	
+	// 회원PW업데이트
+	void passwordUpdate(MemberVO vo) throws Exception;
 }

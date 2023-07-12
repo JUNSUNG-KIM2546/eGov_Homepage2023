@@ -40,9 +40,9 @@
 						</form>
 					</div>
 					<ul>
-						<li><p> 회원으로 가입하시겠습니까?	</p><a href="/join/siteUseAgree.do">회원가입		</a></li>
-						<li><p> 아이디를 잊으셨나요? 	</p><a href="/member/findId.do">	아이디 찾기	</a></li>
-						<li><p> 비밀번호를 잊으셨나요?	</p><a href="">						패스워드 찾기	</a></li>
+						<li><p> 회원으로 가입하시겠습니까?	</p><a href="/join/siteUseAgree.do">	회원가입		</a></li>
+						<li><p> 아이디를 잊으셨나요? 	</p><a href="/member/findId.do">		아이디 찾기	</a></li>
+						<li><p> 비밀번호를 잊으셨나요?	</p><a href="/member/findPassword.do">	패스워드 찾기	</a></li>
 					</ul>
 				</div>
 			</div>

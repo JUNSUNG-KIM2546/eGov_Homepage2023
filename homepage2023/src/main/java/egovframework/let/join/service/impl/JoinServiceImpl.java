@@ -35,7 +35,7 @@ public class JoinServiceImpl extends EgovAbstractServiceImpl implements JoinServ
 		vo.setPassword(enpassword);
 		
 		//이메일 import EgovStringUtill = egovframework.let.utl.fcc.service.EgovStringUtil
-		if(EgovStringUtil.isEmpty(vo.getEmailId()) && EgovStringUtil.isEmpty(vo.getEmailDomain())) {
+		if(!EgovStringUtil.isEmpty(vo.getEmailId()) && !EgovStringUtil.isEmpty(vo.getEmailDomain())) {
 			vo.setEmailAdres(vo.getEmailId() + "@" + vo.getEmailDomain());
 		}
 		

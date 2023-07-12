@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.member.service.impl.MemberMapper">		<!-- (마이바티스)맵퍼 경로 설정, 여기 경로꺼만 가지고 온다 -->
+	
+	<!-- 회원ID 찾기 -->
+	<resultMap type="egovframework.let.member.service.MemberVO" id="findId">
+		<result property="esntlId" column="ESNTL_ID"/>
+		<result property="emplyrId" column="EMPLYR_ID"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="emailAdres" column="EMAIL_ADRES"/>
+	</resultMap>
+	
+	<!-- 회원PW 찾기 -->
+	<resultMap type="egovframework.let.member.service.MemberVO" id="findPassword">
+		<result property="esntlId" column="ESNTL_ID"/>
+		<result property="emplyrId" column="EMPLYR_ID"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="emailAdres" column="EMAIL_ADRES"/>
+	</resultMap>
+	
+	<!-- 회원ID 찾기 -->
+	<select id="findId" resultMap="findId">
+		SELECT ESNTL_ID
+				, EMPLYR_ID
+				, USER_NM
+				, EMAIL_ADRES
+		FROM lettnemplyrinfo
+		WHERE EMPLYR_STTUS_CODE = 'P'
+			AND USER_NM = #{userNm}
+			AND PASSWORD_HINT = #{passwordHint}
+			AND PASSWORD_CNSR = #{passwordCnsr}
+			AND EMAIL_ADRES = #{emailAdres}
+		ORDER BY SBSCRB_DE DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 회원PW 찾기 -->
+	<select id="findPassword" resultMap="findPassword">
+		SELECT ESNTL_ID
+				, EMPLYR_ID
+				, USER_NM
+				, EMAIL_ADRES
+		FROM lettnemplyrinfo
+		WHERE EMPLYR_STTUS_CODE = 'P'
+			AND EMPLYR_ID = #{emplyrId}
+			AND USER_NM = #{userNm}
+			AND PASSWORD_HINT = #{passwordHint}
+			AND PASSWORD_CNSR = #{passwordCnsr}
+		ORDER BY SBSCRB_DE DESC
+		LIMIT 1
+	</select>
+	
+	<!-- 회원PW 업데이트 -->
+	<update id="passwordUpdate">
+		UPDATE LETTNEMPLYRINFO
+		   SET PASSWORD = #{password}
+		 WHERE ESNTL_ID = #{esntlId}
+	</update>
+	
+</mapper>
+
