@@ -19,6 +19,10 @@
 	        	<entry key="imagePageUnit" 			value="12"/>
 	        	<entry key="imagePageSize" 			value="10"/>
 	        	
+	        	<entry key="mail.gmailUser" value="kjs7953@gmail.com"/>
+	        	<entry key="mail.gmailUserName" value="스마트 소프트웨어 학과 하이테크 2023학번 @JunnnMo3o"/>
+	        	<entry key="mail.gmailPassword" value="rfvlubkyydnenmie"/>
+	        	
 	        </map>
 		</property>
 	</bean>

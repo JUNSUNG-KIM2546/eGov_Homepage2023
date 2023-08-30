@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.test.service.impl.TestMapper">		<!-- (마이바티스)맵퍼 경로 설정, 여기 경로꺼만 가지고 온다 -->
+	
+	<resultMap type="egovframework.let.test.service.TestVO" id="test">
+		<result property="testId" column="TEST_ID"/>
+		<result property="sj" column="SJ"/>
+		<result property="cn" column="CN"/>
+		<result property="userNm" column="USER_NM"/>
+		<result property="frstRegistPnttm" column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" column="FRST_REGISTER_ID"/>
+		<result property="lastUpdtPnttm" column="LAST_UPDT_PNTTM"/>
+		<result property="lastUpdusrId" column="LAST_UPDUSR_ID"/>
+	</resultMap>
+	
+	<!-- 셀렉트 -->
+	<select id="selectTest" resultMap="test">
+	SELECT *
+	FROM LETCRUDTEST
+	WHERE TEST_ID = #{testId}
+	</select>
+	
+	<!-- 셀렉트리스트 -->
+	<select id="selectTestList" resultType="egovMap">
+	SELECT TEST_ID, SJ, USER_NM, date_format(FRST_REGIST_PNTTM, '%Y-%m-%d') AS FRST_REGIST_PNTTM, date_format(LAST_UPDT_PNTTM, '%Y-%m-%d') AS LAST_UPDT_PNTTM
+	FROM LETCRUDTEST
+	ORDER BY TEST_ID DESC
+	LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+	
+	
+	<!-- 카운트 -->
+	<select id="selectTestListCnt" resultType="java.lang.Integer">
+	SELECT count(*) CNT
+	FROM LETCRUDTEST
+	</select>
+	
+	<!-- 인서트 -->
+	<insert id="insertTest" parameterType="egovframework.let.test.service.TestVO">
+	INSERT INTO LETCRUDTEST (TEST_ID, SJ, CN, USER_NM, FRST_REGIST_PNTTM)
+	VALUES ( #{testId}, #{sj}, #{cn}, #{userNm}, NOW() )
+	</insert>
+	
+	<!-- 업데이트 -->
+	<update id="updateTest" parameterType="egovframework.let.test.service.TestVO">
+	UPDATE LETCRUDTEST
+	SET SJ = #{sj}, CN = #{cn}, USER_NM = #{userNm}, LAST_UPDT_PNTTM = NOW()
+	WHERE TEST_ID = #{testId}
+	</update>
+	
+	<!-- 델리트 -->
+	<delete id="deleteTest" parameterType="egovframework.let.test.service.TestVO">
+	DELETE 
+	FROM LETCRUDTEST
+	WHERE TEST_ID = #{testId}
+	</delete>
+	
+</mapper>
+

@@ -57,5 +57,37 @@
 		 WHERE ESNTL_ID = #{esntlId}
 	</update>
 	
+	<!-- 회원 목록 -->
+	<select id="selectMberList" resultType="egovMap">
+		SELECT ESNTL_ID
+				, EMPLYR_ID
+				, USER_NM
+				, EMAIL_ADRES
+				, SBSCRB_DE
+		FROM lettnemplyrinfo
+		WHERE EMPLYR_STTUS_CODE = 'P'
+		ORDER BY SBSCRB_DE DESC
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+	
+	<!-- 회원목로 수 -->
+	<select id="selectMberListCnt" resultType="java.lang.Integer">
+		SELECT COUNT(*) CNT
+		FROM lettnemplyrinfo
+		WHERE EMPLYR_STTUS_CODE = 'P'
+	</select>
+	
+	<!-- 회원상세(관리자가 회원 수정) -->
+	<select id="selectMber" resultType="egovMap">
+		SELECT ESNTL_ID
+				, EMPLYR_ID
+				, USER_NM
+				, EMAIL_ADRES
+				, SBSCRB_DE
+		FROM lettnemplyrinfo
+		WHERE	ESNTL_ID = #{esntlId}
+				AND EMPLYR_STTUS_CODE = 'P'
+	</select>
+	
 </mapper>
 
