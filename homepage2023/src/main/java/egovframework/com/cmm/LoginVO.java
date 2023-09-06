@@ -52,6 +52,15 @@ public class LoginVO implements Serializable{
 	private String ip;
 	/** GPKI인증 DN */
 	private String dn;
+	/** 로그인타입 */
+	private String loginType;
+	
+	public String getLoginType() {
+		return loginType;
+	}
+	public void setLoginType(String loginType) {
+		this.loginType = loginType;
+	}
 	/**
 	 * id attribute 를 리턴한다.
 	 * @return String

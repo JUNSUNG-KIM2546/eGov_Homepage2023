@@ -2,10 +2,13 @@ package egovframework.com.cmm.service;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +98,7 @@ public class EgovProperties{
 	 * 인자로 주어진 문자열을 Key값으로 하는 프로퍼티 값을 반환한다(Globals.java 전용)
 	 * @param keyName String
 	 * @return String
-
+	 */
 	public static String getProperty(String keyName){
 		String value = ERR_CODE;
 		value="99";
@@ -122,7 +125,7 @@ public class EgovProperties{
 		}
 		return value;
 	}
-	*/
+	
 	/**
 	 * 주어진 파일에서 인자로 주어진 문자열을 Key값으로 하는 프로퍼티 상대 경로값을 절대 경로값으로 반환한다
 	 * @param fileName String

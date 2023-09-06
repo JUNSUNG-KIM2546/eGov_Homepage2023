@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import egovframework.com.cmm.EgovMessageSource;
 import egovframework.let.join.service.JoinService;
 import egovframework.let.join.service.JoinVO;
+import egovframework.let.utl.fcc.service.EgovStringUtil;
 import net.sf.json.JSONObject;
 
 
@@ -74,9 +75,24 @@ public class JoinController {
 	// 회원가입
 	@RequestMapping(value = "/join/insertMember.do")
 	public String insertMember(@ModelAttribute("searchVO") JoinVO vo, HttpServletRequest request, ModelMap model) throws Exception {
-		//1.매크로를 막기 위해 JSP에서 1차로 확인하고 컨트롤러에서 2차 확인한다 	2.중복을 피하기 위해서 한번더 한다
+		if(!EgovStringUtil.isEmpty(vo.getLoginType())) {
+			// 일반가입을 제외하고 ID값은 SNS명+ '-' + ID값
+			if(!("normal").equals(vo.getLoginType())) {
+				vo.setEmplyrId(vo.getLoginType() + "-" + vo.getEmplyrId());
+				vo.setPassword("");
+				vo.setPasswordHint("SNS가입자");
+				vo.setPasswordCnsr("SNS가입자");
+			}
+		}
+		
+		// 1.매크로를 막기 위해 JSP에서 1차로 확인하고 컨트롤러에서 2차 확인한다 	2.중복을 피하기 위해서 한번더 한다
 		if(joinService.duplicateCheck(vo) > 0) {
-			model.addAttribute("message", egovMessageSource.getMessage("fail.duplicate.member")); //이미 사용중인 ID 입니다.
+			if(!("normal").equals(vo.getLoginType())) {
+				model.addAttribute("message", "이미 등록 된 SNS계정입니다.");
+			}
+			else {
+				model.addAttribute("message", egovMessageSource.getMessage("fail.duplicate.member")); //이미 사용중인 ID 입니다.
+			}
 			return "forward:/join/memberType.do";
 		}
 		else {
