@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.github.scribejava.core.builder.ServiceBuilder;
@@ -19,7 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-
+@Service("naverLoginService")
 public class NaverLoginServiceImpl extends EgovAbstractServiceImpl implements NaverLoginService {
 	// 인증 요청문을 구성하는 파라미터
 	private final static String CLIENT_ID = Globals.NAVER_CLIENTID;
@@ -91,11 +92,10 @@ public class NaverLoginServiceImpl extends EgovAbstractServiceImpl implements Na
 				.url(PROFILE_API_URL)
 				.method("GET", null)
 				.addHeader("Content-type", "application/x-www-form-urlencoded")
-				.addHeader("Authorization", "Bearer" + oauthToken.getAccessToken())
+				.addHeader("Authorization", "Bearer " + oauthToken.getAccessToken())
 				.build();
 		Response response = client.newCall(request).execute();
 
-		
 		return response.body().string();
 	}
 	
