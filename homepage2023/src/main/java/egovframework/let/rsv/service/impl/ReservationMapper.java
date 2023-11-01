@@ -19,7 +19,7 @@ public interface ReservationMapper {
 		ReservationVO selectReservation(ReservationVO vo) throws Exception; 
 			
 		// 예약 등록
-		String insertReservation(ReservationVO vo) throws Exception; 
+		void insertReservation(ReservationVO vo) throws Exception; 
 			
 		// 예약 수정하기
 		void updateReservation(ReservationVO vo) throws Exception; 

@@ -12,14 +12,15 @@
 <title>예약시스템</title>
 </head>
 <body>
-
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>	<!-- 여기 버전을 가져오겠다 (교육용), 회사에서는 회사에 맞는 버전으로 가져와야함 -->
+	
 	<%-- BBS Style --%>
 	<link href="/asset/BBSTMP_0000000000001/style.css" rel="stylesheet" />
 	<%-- 공통 Style --%>
 	<link href="/asset/LYTTMP_0000000000000/style.css" rel="stylesheet" />
 	
 	<%-- 기본 URL --%>
-	<c:url var="_BASE-PARAM" value="">
+	<c:url var="_BASE_PARAM" value="">
 		<c:param name="searchCondition" value="${searchVO.searchCondition}"></c:param>
 		<c:param name="searchKeyword" value="${searchVO.searchKeyword}"></c:param>
 	</c:url>
@@ -76,7 +77,7 @@
 									<tr>
 										<td class="num"><c:out value="${paginationInfo.totalRecordCount - ((searchVO.pageIndex-1) * searchVO.pageUnit) - (status.count - 1)}"/></td>
 										<td class="tit">
-											<c:url var="viewUrl" value="/admin/rsv/rsvRegist.do${_BASE_PARAM}">
+											<c:url var="updateUrl" value="/admin/rsv/rsvRegist.do${_BASE_PARAM}">
 												<c:param name="resveId" 	value="${result.resveId}"/>
 												<c:param name="pageIndex" 	value="${searchVO.pageIndex}"/>
 											</c:url>
@@ -152,7 +153,7 @@
 		
 		$(document).ready(function() {
 			//삭제
-			$(".btn-del").click(function() {
+			$(".btn_del").click(function() {
 				if(!confirm("삭제하시겠습니까?")) {
 					return false;
 				}
