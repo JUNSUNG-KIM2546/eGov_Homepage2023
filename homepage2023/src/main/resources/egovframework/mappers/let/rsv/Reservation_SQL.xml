@@ -4,7 +4,7 @@
 	
 	<resultMap type="egovframework.let.rsv.service.ReservationVO" id="reservation">
 		<result property="resveId" 				column="RESVE_ID"/>
-		<result property="resveSeCode" 			column="RESVESE_CODE"/>
+		<result property="resveSeCode" 			column="RESVE_SE_CODE"/>
 		<result property="resveSj" 				column="RESVE_SJ"/>
 		<result property="recNm" 				column="REC_NM"/>
 		<result property="maxAplyCnt" 			column="MAX_APLY_CNT"/>
@@ -45,10 +45,10 @@
 			   FROM RESVEREQSTINFO B
 			   WHERE A.RESVE_ID = B.RESVE_ID) AS APPLY_CNT
 			<![CDATA[
-			, CASE WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') < A.REQST_BGNDE THEN 1
-				   WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') >= A.REQST_BGNDE AND DATE_FORMAT(NOW(), '%Y-&m-&d') <= A.REQST_ENDDE THEN 2
-				   WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') > A.REQST_ENDDE AND DATE_FORMAT(NOW(), '%Y-&m-&d') < A.USE_BEGIN_DT THEN 3
-				   WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') >= A.USE_BEGIN_DT AND DATE_FORMAT(NOW(), '%Y-&m-&d') <= A.USE_END_DT THEN 4
+			, CASE WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') < A.REQST_BGNDE THEN 1
+				   WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') >= A.REQST_BGNDE AND DATE_FORMAT(NOW(), '%Y-%m-%d') <= A.REQST_ENDDE THEN 2
+				   WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') > A.REQST_ENDDE AND DATE_FORMAT(NOW(), '%Y-%m-%d') < A.USE_BEGIN_DT THEN 3
+				   WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') >= A.USE_BEGIN_DT AND DATE_FORMAT(NOW(), '%Y-%m-%d') <= A.USE_END_DT THEN 4
 					ELSE 5
 			END AS APPLY_STATUS
 			]]>
@@ -73,21 +73,21 @@
 	<sql id="selectReservationListWhere">
 		<where>
 			A.USE_AT = 'Y'
+			<if test='searchCondition != null and searchCondition != ""'>
+				<choose>
+					 <when test='searchCondition == "0"'>
+					 	AND A.RESVE_SJ LIKE CONCAT('%', #{searchKeyword}, '%')
+					 </when>
+					 <when test='searchCondition == "1"'>
+					 	AND A.RESVE_CN LIKE CONCAT('%', #{searchKeyword}, '%')
+				 	</when>
+				</choose>
+			</if>
+			
+			<if test='searchDate != null and searchDate != ""'>
+				AMD (DATE_FORMAT(USE_BEGIN_DT, '%Y%m') = #{searchDate} OR DATE_FORMAT(USE_END_DT, '%Y%m') = #{searchDate})
+			</if>
 		</where>
-		<if test='searchCondition != null and searchCondition != ""'>
-			<choose>
-				 <when test='searchCondition == "0"'>
-				 	AND A.RESVE_SJ LIKE CONCAT('%', #{searchKeyword}, '%')
-				 </when>
-				 <when test='searchCondition == "1"'>
-				 	AND A.RESVE_CN LIKE CONCAT('%', #{searchKeyword}, '%')
-			 	</when>
-			</choose>
-		</if>
-		
-		<if test='searchDate != null and searchDate != ""'>
-			AMD (DATE_FORMAT(USE_BEGIN_DT, '%Y%m') = #{searchDate} OR DATE_FORMAT(USE_END_DT, '%Y%m') = #{searchDate})
-		</if>
 	</sql>
 	
 	<select id="selectReservation" resultMap="reservation">
@@ -107,20 +107,18 @@
 			, A.USE_AT
 			, A.FRST_REGIST_PNTTM
 			, A.FRST_REGISTER_ID
-			, (SELECT
-				 COUNT(*)
+			, (SELECT COUNT(*)
 			   FROM RESVEREQSTINFO B
 			   WHERE A.RESVE_ID = B.RESVE_ID) AS APPLY_CNT
 			<![CDATA[
-			, CASE WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') < A.REQST_BGNDE THEN 1
-				   WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') >= A.REQST_BGNDE AND DATE_FORMAT(NOW(), '%Y-&m-&d') <= A.REQST_ENDDE THEN 2
-				   WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') > A.REQST_ENDDE AND DATE_FORMAT(NOW(), '%Y-&m-&d') < A.USE_BEGIN_DT THEN 3
-				   WHEN DATE_FORMAT(NOW(), '%Y-&m-&d') >= A.USE_BEGIN_DT AND DATE_FORMAT(NOW(), '%Y-&m-&d') <= A.USE_END_DT THEN 4
+			, CASE WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') < A.REQST_BGNDE THEN 1
+				   WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') >= A.REQST_BGNDE AND DATE_FORMAT(NOW(), '%Y-%m-%d') <= A.REQST_ENDDE THEN 2
+				   WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') > A.REQST_ENDDE AND DATE_FORMAT(NOW(), '%Y-%m-%d') < A.USE_BEGIN_DT THEN 3
+				   WHEN DATE_FORMAT(NOW(), '%Y-%m-%d') >= A.USE_BEGIN_DT AND DATE_FORMAT(NOW(), '%Y-%m-%d') <= A.USE_END_DT THEN 4
 					ELSE 5
 			END AS APPLY_STATUS
 			]]>
-			, (SELECT
-					COUNT(*)
+			, (SELECT COUNT(*)
 				FROM RESVEREQSTINFO B
 				WHERE A.RESVE_ID = B.RESVE_ID
 					AND B.CONFM_SE_CODE = 'O') AS APPLY_F_CNT

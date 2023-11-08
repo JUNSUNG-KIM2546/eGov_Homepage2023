@@ -38,7 +38,7 @@
 	</c:choose>
 	
 	<%-- 기본 URL --%>
-	<c:url var="_BASE-PARAM" value="">
+	<c:url var="_BASE_PARAM" value="">
 		<c:param name="searchCondition" value="${searchVO.searchCondition}"></c:param>
 		<c:if test="${not empty searchVO.searchKeyword }"><c:param name="searchKeyword" value="${searchVO.searchKeyword}"/></c:if>
 	</c:url>

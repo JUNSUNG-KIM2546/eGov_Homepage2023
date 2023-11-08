@@ -1,4 +1,4 @@
-package egovframework.let.rsv.web;
+package egovframework.let.admin.rsv.web;
 
 import java.util.List;
 

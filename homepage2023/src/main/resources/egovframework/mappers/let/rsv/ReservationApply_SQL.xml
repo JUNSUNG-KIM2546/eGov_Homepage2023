@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.let.rsv.service.impl.ReservationApplyMapper">
+	
+	<select id="duplicateApplyCheck" resultType="java.lang.Integer">
+		SELECT COUNT(*) CNT
+		FROM RESVEREQSTINFO A
+		WHERE RESVE_ID = #{resveId}
+		AND FRST_REGISTER_ID = #{userId}
+		AND USE_AT = 'Y'
+	</select>
+	
+	<insert id="insertReservationApply" parameterType="egovframework.let.rsv.service.ReservationApplyVO">
+		INSERT INTO RESVEREQSTINFO
+		(
+			REQST_ID, 
+			RESVE_ID, 
+			RESVE_DE, 
+			CHARGER_NM, 
+			TELNO, 
+			EMAIL, 
+			CONFM_SE_CODE, 
+			CONFM_PNTTM, 
+			CREAT_IP, 
+			USE_AT, 
+			FRST_REGIST_PNTTM,
+			FRST_REGISTER_ID, 
+			LAST_UPDT_PNTTM, 
+			LAST_UPDUSR_ID
+		)
+		VALUES
+		(
+			#{reqstId},
+			#{resveId},
+			#{resveDe},
+			#{chargerNm},
+			#{telno},
+			#{email},
+			<choose>
+				<when test="confmSeCode == 'TYPE01'">
+					'O',
+					NOW(),
+				</when>
+				<otherwise>
+					'R',
+					NULL,
+				</otherwise>
+			</choose>
+			#{creatIp},
+			'Y',
+			NOW(),
+			#{userId},
+			NOW(),
+			#{userId}
+		)
+	</insert>
+	
+	
+</mapper>
