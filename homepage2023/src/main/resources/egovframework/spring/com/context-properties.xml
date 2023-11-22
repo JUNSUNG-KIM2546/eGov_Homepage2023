@@ -23,6 +23,9 @@
 	        	<entry key="mail.gmailUserName" value="스마트 소프트웨어 학과 하이테크 2023학번 @JunnnMo3o"/>
 	        	<entry key="mail.gmailPassword" value="rfvlubkyydnenmie"/>
 	        	
+	        	<!-- 예약자 업로드 물리경로 -->
+	        	<entry key="rsvFileStorePath" value="${Globals.File}/upload/rsv"></entry>
+	        	
 	        </map>
 		</property>
 	</bean>

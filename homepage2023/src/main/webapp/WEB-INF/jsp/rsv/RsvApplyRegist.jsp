@@ -97,9 +97,9 @@
 				<h3 class="icon1"> 신청정보 </h3>
 				<form action="${actionUrl }" method="post" id="frm" name="frm" onsubmit="return regist()">
 					<input type="hidden" name="resveId" value="${searchVO.resveId }"/>
-					<input type="hidden" name="resveSeCode" value="${searchVO.resveSeCode }"/>
+					<input type="hidden" name="resveSeCode" value="${reservation.resveSeCode }"/>
 					<input type="hidden" name="reqstId" value="${searchVO.reqstId }"/>
-					<input type="hidden" name="resveDe" value="TYPE01"/>
+					<input type="hidden" name="resveDe" value="${reservation.resveSeCode }"/>
 					
 					<table class="chart2">
 						<caption> 예약자정보 작성 </caption>

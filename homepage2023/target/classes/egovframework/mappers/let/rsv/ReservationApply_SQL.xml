@@ -2,6 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.let.rsv.service.impl.ReservationApplyMapper">
 	
+	<resultMap type="egovframework.let.rsv.service.ReservationApplyVO" id="reservationApply">
+		<result property="reqstId" 			column="REQST_ID"/>
+		<result property="resveId" 			column="RESVE_ID"/>
+		<result property="resveDe" 			column="RESVE_DE"/>
+		<result property="chargerNm" 		column="CHARGER_NM"/>
+		<result property="telno" 			column="TELNO"/>
+		<result property="email" 			column="EMAIL"/>
+		<result property="confmSeCode" 		column="CONFM_SE_CODE"/>
+		<result property="confmerId" 		column="CONFMER_ID"/>
+		<result property="returnResn" 		column="RETURN_RESN"/>
+		<result property="confmPnttm" 		column="CONFM_PNTTM"/>
+		<result property="creatIp" 			column="CREAT_IP"/>
+		<result property="useAt" 			column="USE_AT"/>
+		<result property="frstRegistPnttm" 	column="FRST_REGIST_PNTTM"/>
+		<result property="frstRegisterId" 	column="FRST_REGISTER_ID"/>
+	</resultMap>
+	
 	<select id="duplicateApplyCheck" resultType="java.lang.Integer">
 		SELECT COUNT(*) CNT
 		FROM RESVEREQSTINFO A
@@ -37,7 +54,7 @@
 			#{telno},
 			#{email},
 			<choose>
-				<when test="confmSeCode == 'TYPE01'">
+				<when test="resveSeCode == 'TYPE01'">
 					'O',
 					NOW(),
 				</when>
@@ -55,5 +72,197 @@
 		)
 	</insert>
 	
+	<select id="selectReservationApplyList" resultType="egovMap">
+		SELECT A.REQST_ID, 
+				A.RESVE_ID, 
+				A.RESVE_DE, 
+				A.CHARGER_NM, 
+				A.TELNO, 
+				A.EMAIL, 
+				A.CONFM_SE_CODE, 
+				A.CONFMER_ID, 
+				A.RETURN_RESN, 
+				A.CONFM_PNTTM, 
+				A.CREAT_IP, 
+				A.USE_AT, 
+				A.FRST_REGIST_PNTTM, 
+				A.FRST_REGISTER_ID, 
+				B.RESVE_SJ, 
+				DATE_FORMAT(A.FRST_REGIST_PNTTM, '%Y-%m-%d') AS FRST_REGIST_PNTTM_YMD
+		FROM RESVEREQSTINFO A
+		LEFT OUTER JOIN RESVEINFO B ON A.RESVE_ID = B.RESVE_ID
+		<include refid="selectReservationApplyListWhere"></include>
+		ORDER BY A.FRST_REGIST_PNTTM DESC
+		<if test='mngAt != "Y"'>	<!-- 스트링은 "Y" 쌍따옴표로 감싸야한다 -->
+			LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+		</if>
+	</select>
+	
+	<select id="selectReservationApplyListCnt" resultType="java.lang.Integer">
+		SELECT COUNT(*) CNT
+		FROM RESVEREQSTINFO A
+		LEFT OUTER JOIN RESVEINFO B ON A.RESVE_ID = B.RESVE_ID
+		<include refid="selectReservationApplyListWhere"></include>
+	</select>
+	
+	<sql id="selectReservationApplyListWhere">
+		<where>
+			A.USE_AT = 'Y'
+			<if test="resveId != null and resveId != ''">
+				AND A.RESVE_ID = #{resveId}
+			</if>
+			<if test="userId != null and userId != ''">
+				AND A.FRST_REGISTER_ID = #{userId}
+			</if>
+		</where>
+	</sql>
+	
+	<select id="selectReservationApply" resultMap="reservationApply">
+		SELECT	A.REQST_ID, 
+				A.RESVE_ID, 
+				A.RESVE_DE, 
+				A.CHARGER_NM, 
+				A.TELNO, 
+				A.EMAIL, 
+				A.CONFM_SE_CODE, 
+				A.CONFMER_ID, 
+				A.RETURN_RESN, 
+				A.CONFM_PNTTM, 
+				A.CREAT_IP, 
+				A.USE_AT, 
+				A.FRST_REGIST_PNTTM, 
+				A.FRST_REGISTER_ID
+		FROM	RESVEREQSTINFO A
+		WHERE	A.REQST_ID = #{reqstId}
+		AND		A.RESVE_ID = #{resveId}
+		AND		A.USE_AT = 'Y'
+	</select>
+	
+	<update id="updateReservationApply" parameterType="egovframework.let.rsv.service.ReservationApplyVO">
+		UPDATE RESVEREQSTINFO SET
+				CHARGER_NM = #{chargerNm},
+				TELNO = #{telno},
+				EMAIL = #{email},
+				<if test="confmSeCode != null and confmSeCode != ''">
+					CONFM_SE_CODE = #{confmSeCode},
+				</if>
+				LAST_UPDT_PNTTM = NOW(),
+				LAST_UPDUSR_ID = #{userId}
+		WHERE	REQST_ID = #{reqstId}
+				
+	</update>
+	
+	<update id="deleteReservationApply" parameterType="egovframework.let.rsv.service.ReservationApplyVO">
+		UPDATE RESVEREQSTINFO SET
+				USE_AT = 'N'
+		WHERE REQST_ID = #{reqstId}
+	</update>
+	
+	<update id="updateReservationConfirm" parameterType="egovframework.let.rsv.service.ReservationApplyVO">
+		UPDATE RESVEREQSTINFO SET
+				CONFM_SE_CODE = #{confmSeCode},
+				RETURN_RESN = #{returnResn},
+				CONFMER_ID = #{userId},
+				CONFM_PNTTM = NOW(),
+				LAST_UPDT_PNTTM = NOW(),
+				LAST_UPDUSR_ID = #{userId}
+		WHERE REQST_ID = #{reqstId}
+	</update>
+	
+	<insert id="insertReservationApplyTemp" parameterType="egovframework.let.rsv.service.ReservationApplyVO">
+		INSERT INTO RESVEREQSTINFOTEMP
+		(
+			REQSTTEMP_ID,
+			REQST_ID, 
+			RESVE_ID, 
+			RESVE_DE, 
+			CHARGER_NM, 
+			TELNO, 
+			EMAIL, 
+			CONFM_SE_CODE, 
+			CREAT_IP, 
+			USE_AT, 
+			FRST_REGIST_PNTTM,
+			FRST_REGISTER_ID, 
+			LAST_UPDT_PNTTM, 
+			LAST_UPDUSR_ID
+		)
+		VALUES
+		(
+			#{reqsttempId},
+			#{reqstId},
+			#{resveId},
+			#{resveDe},
+			#{chargerNm},
+			#{telno},
+			#{email},
+			'O',
+			#{creatIp},
+			'Y',
+			NOW(),
+			#{userId},
+			NOW(),
+			#{userId}
+		)
+	</insert>
+	
+	<delete id="deleteReservationApplyTemp" parameterType="egovframework.let.rsv.service.ReservationApplyVO">
+		DELETE FROM RESVEREQSTINFOTEMP
+		WHERE REQSTTEMP_ID = #{reqsttempId}
+	</delete>
+	
+	<select id="selectReservationApplyTemp" resultType="egovMap">
+		SELECT	
+				A.REQST_ID, 
+				A.RESVE_ID, 
+				A.RESVE_DE, 
+				A.CHARGER_NM, 
+				A.TELNO, 
+				A.EMAIL, 
+				A.CONFM_SE_CODE, 
+				A.CONFMER_ID, 
+				A.RETURN_RESN, 
+				A.CONFM_PNTTM, 
+				A.CREAT_IP, 
+				A.USE_AT, 
+				A.FRST_REGIST_PNTTM, 
+				A.FRST_REGISTER_ID
+		FROM	RESVEREQSTINFOTEMP A
+		WHERE	A.REQSTTEMP_ID = #{reqsttempId}
+	</select>
+	
+	<insert id="insertReservationApplyTempAll" parameterType="egovframework.let.rsv.service.ReservationApplyVO">
+		INSERT INTO RESVEREQSTINFO
+		(
+			REQST_ID, 
+			RESVE_ID, 
+			RESVE_DE, 
+			CHARGER_NM, 
+			TELNO, 
+			EMAIL, 
+			CONFM_SE_CODE, 
+			CREAT_IP, 
+			USE_AT, 
+			FRST_REGIST_PNTTM,
+			FRST_REGISTER_ID, 
+			LAST_UPDT_PNTTM, 
+			LAST_UPDUSR_ID
+		)
+		SELECT	REQST_ID, 
+				RESVE_ID, 
+				RESVE_DE, 
+				CHARGER_NM, 
+				TELNO, 
+				EMAIL, 
+				CONFM_SE_CODE, 
+				CREAT_IP, 
+				USE_AT, 
+				FRST_REGIST_PNTTM, 
+				FRST_REGISTER_ID,
+				LAST_UPDT_PNTTM,
+				LAST_UPDUSR_ID
+		FROM	RESVEREQSTINFOTEMP 
+		WHERE	REQSTTEMP_ID = #{reqsttempId}
+	</insert>
 	
 </mapper>
